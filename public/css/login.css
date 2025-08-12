@@ -1,0 +1,12 @@
+.auth{
+    display: flex;
+    flex-direction: column;
+}
+
+.login-btn{
+    padding: 0;
+    font-size: 25px !important;
+}
+
+
+

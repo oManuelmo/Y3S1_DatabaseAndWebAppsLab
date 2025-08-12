@@ -1,0 +1,140 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.items-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+
+}
+
+
+.btn {
+    border: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    margin: 0;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    outline: none;
+    font-size: 20px !important;
+}
+
+.btn-primary {
+    background-color: #D4AF37;
+    color: #FFFFFF;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #B89D35;
+}
+
+.btn-secondary {
+    background-color: #E0E0E0;
+    color: #333333;
+}
+
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
+    background-color: #B8C6D3;
+}
+
+.btn:active, .btn:focus {
+    outline: none;
+    background-color: #B89D35;
+    color: #FFFFFF;
+}
+
+.item-card {
+    margin: 1em;
+    padding: 1em;
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.item-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.item-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.item-title:hover {
+    color: #D4AF37;
+}
+
+.item-text {
+    font-size: 1rem;
+}
+
+.item-price {
+    font-weight: 700;
+    color: #28a745;
+}
+
+.item-status {
+    font-weight: 600;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.item-status.Pending {
+    background-color: #ffc107;
+    color: #FFFFFF;
+}
+
+.item-status.Auction {
+    background-color: #17a2b8;
+    color: #FFFFFF;
+}
+
+.item-status.NotSold {
+    background-color: #6c757d;
+    color: #FFFFFF;
+}
+
+.item-status.Sold {
+    background-color: #28a745;
+    color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+    .btn-group {
+        align-items: center;
+    }
+
+    .item-card {
+        margin-bottom: 20px;
+    }
+
+    .item-title {
+        font-size: 1.1rem;
+    }
+
+    .item-text {
+        font-size: 0.95rem;
+    }
+}

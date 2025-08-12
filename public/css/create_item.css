@@ -1,0 +1,209 @@
+.create-item {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-icon, .delete-icon {
+    font-family: 'Material Symbols Rounded';
+    font-size: 48px;
+    color: #D4AF37;
+    cursor: pointer;
+    position: absolute;
+    transition: color 0.3s ease;
+}
+
+.upload-icon:hover {
+    color: #5df77c !important;
+}
+
+.delete-icon {
+    opacity: 0;
+}
+
+.delete-icon:hover {
+    color: #d32f2f !important;
+}
+
+.image-upload:hover .delete-icon {
+    opacity: 1;
+}
+
+#description {
+    overflow-y: hidden !important;
+    resize: none !important;
+    min-height: 100px !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.error{
+    color: red;
+}
+
+#image-upload-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.image-upload {
+    width: calc(20% - 20px);
+    position: relative;
+    margin-bottom: 2em;
+}
+
+#preview1, #preview2, #preview3, #preview4, #preview5 {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #D4AF37;
+    border-radius: 8px;
+}
+
+#preview1 img, #preview2 img, #preview3 img, #preview4 img, #preview5 img {
+    max-width: 135px;
+    max-height: 135px;
+    height: auto;
+    width: auto;
+    margin: 5px;
+    object-fit: fill;
+    border: 2px solid black ;
+}
+
+
+.container-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+@media (max-width: 1000px) {
+    #image-upload-container {
+        flex-direction: column;
+        align-items: center; 
+    }
+
+    .image-upload {
+        width: 100%; 
+        margin-bottom: 20px; 
+    }
+
+}
+
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+.shadow-lg {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rounded-lg {
+    border-radius: 8px;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.p-6 {
+    padding: 1.5rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+.flex.justify-end.space-x-4 {
+    justify-content: center;
+}
+
+
+#imageCropModal {
+
+    display: none;
+    align-items: center; 
+    justify-content: center; 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+#imageCropModal .bg-white {
+    max-width: 400px;
+    width: 100%;
+    height: auto !important;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+#imageCropModal h2 {
+    margin-bottom: 10px;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.cropper-container {
+    max-width: 100%;
+    min-height: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+    overflow: hidden; 
+}
+
+#imageCropModal.show {
+    display: flex !important;
+    opacity: 1 !important;
+    transition: opacity 0.3s ease;
+}
+
+.cropper-container img {
+    max-width: 100%;
+    max-height: 100%;
+    border: none !important;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}

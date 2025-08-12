@@ -1,0 +1,949 @@
+openapi: 3.0.3
+info:
+  title: Bidtano
+  description: Web resources for A7
+  version: '1.0'
+servers:
+  - url: http://127.0.0.1:8000
+tags:
+  - name: 'M01: Authentication and Profile'
+  - name: 'M02: Items'
+  - name: 'M03: Follows and Notifications'
+  - name: 'M04: Administration'
+  - name: 'M05: Static Pages'
+paths:
+  /login:
+    get:
+      operationId: R101
+      summary: 'R101: Login Form'
+      description: 'Provide login form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Profile'
+      responses:
+        '200':
+          description: 'Ok. Show Log-in UI'
+        '302':
+          description: 'User not already logged in go to the main page'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful authentication. Redirect to the main page.'
+                  value: '/main'
+                302Error:
+                  description: 'Failed authentication. Redirect to login form.'
+                  value: '/login'
+    post:
+      operationId: R102
+      summary: 'R102: Login Action'
+      description: 'Processes the login form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Profile'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:          
+                  type: string
+                password:    
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '302':
+          description: 'Redirect after processing the login credentials.'
+          headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful authentication. Redirect to main page.'
+                 value: '/main'
+               302Error:
+                 description: 'Failed authentication. Redirect to login form.'
+                 value: '/login'
+        '422':
+          description: 'The credantials do not match an user login.'
+  /logout:
+    get:
+      operationId: R103
+      summary: 'R103: Logout Action'
+      description: 'Logout the current authenticated user. Access: USR, ADM'
+      tags:
+        - 'M01: Authentication and Profile'
+      responses:
+        '302':
+          description: 'Successful logout'
+          headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful logout. Redirect to login form.'
+                 value: '/login'
+        '404':
+          description: 'User not authenticated'
+  /register:
+   get:
+     operationId: R104
+     summary: 'R104: Register Form'
+     description: 'Provide new user registration form. Access: PUB'
+     tags:
+       - 'M01: Authentication and Profile'
+     responses:
+       '200':
+         description: 'Ok. Show Sign-Up UI'
+   post:
+     operationId: R105
+     summary: 'R105: Register Action'
+     description: 'Processes the new user registration form submission. Access: PUB'
+     tags:
+       - 'M01: Authentication and Profile'
+     requestBody:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            type: object
+            properties:
+              first name:
+                type: string
+              last name:
+                type: string
+              birthdate:
+                type: string
+                format: date
+              email:
+                type: string
+              phone number:
+                type: number
+              password:
+                type: string
+              confirm password:
+                type: string
+              country:
+                type: string
+              city:
+                type: string
+              postal code:
+                type: string
+              address:
+                type: string
+            required:
+              - first name
+              - last name
+              - birthdate
+              - email
+              - phone number
+              - password
+              - confirm password
+              - country
+              - city
+              - postal code
+              - address
+     responses:
+        '302':
+         description: 'Redirect after processing the new user information.'
+         headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful authentication. Redirect to main page.'
+                 value: '/main'
+               302Failure:
+                 description: 'Failed authentication. Redirect to register form.'
+                 value: '/register'
+        '422':
+          description: 'Age can not be below 18 years old.'
+  /profile/{userId}:
+    get:
+      operationId: R106
+      summary: 'R106: View user profile'
+      description: 'Show the user profile. Access: PUB'
+      tags:
+        - 'M01: Authentication and Profile'
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user whose profile is being retrieved.'
+      responses:
+        '200':
+          description: 'Ok. Show User Profile Data'
+        '400':
+          description: 'The user id sent was not a numeric number'
+        '404':
+          description: 'The user was not found'
+  /profile/edit-email-password/{userid}:
+    get:
+      operationId: R107
+      summary: 'R107: Edit Email and Password'
+      description: 'Retrieve the user profile for editing email and password. Access: USR'
+      tags:
+        - 'M01: Authentication and Profile'
+      parameters:
+        - in: path
+          name: userid
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user whose email and password need to be edited.'
+      responses:
+        '200':
+          description: 'Ok. Successful retrieval of user data for editing.'
+        '400':
+          description: 'The user id sent was not a numeric number'
+        '404':
+          description: 'The user was not found'
+    put:
+      operationId: R108
+      summary: 'R108: Update Email and Password'
+      description: 'Update the user profile with a new email and/or password. Access: USR'
+      tags:
+        - 'M01: Authentication and Profile'
+      parameters:
+        - in: path
+          name: userid
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user whose email and password need to be updated.'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: 'The new email address of the user.'
+                password:
+                  type: string
+                  minLength: 8
+                  description: 'The new password for the user (optional, required if changing).'
+                password_confirmation:
+                  type: string
+                  description: 'The confirmation of the new password.'
+      responses:
+        '200':
+          description: 'Ok. Successfully updated the user profile.'
+  /profile/confirm-email-password/{userid}:
+    get:
+      operationId: R109
+      summary: 'R109: Confirm Email and Password'
+      description: 'Display the email and password confirmation form for the user to verify their credentials before allowing changes. Access: USR'
+      tags:
+        - 'M01: Authentication and Profile'
+      parameters:
+        - in: path
+          name: userid
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user whose email and password need to be confirmed.'
+      responses:
+        '200':
+          description: 'Ok. Successful retrieval of the email and password confirmation form.'
+        '400':
+          description: 'The user id sent was not a numeric number'
+        '404':
+          description: 'The user was not found'
+    post:
+      operationId: R110
+      summary: 'R110: Validate Email and Password'
+      description: 'Validate the users email and password to proceed with email/password changes. Access: USR'
+      tags:
+        - 'M01: Authentication and Profile'
+      parameters:
+        - in: path
+          name: userid
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user whose email and password are being validated.'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'The email address of the user.'
+                password:
+                  type: string
+                  description: 'The password of the user.'
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: 'Ok. Email and password are valid. Redirect to the next step for updating the profile.'
+  /profile/{userid}/edit/other-info:
+    get:
+      operationId: R111
+      summary: 'R111: Edit User Other Information'
+      description: 'Retrieve the user profile for editing other information such as name, address, etc. Access: USR'
+      tags:
+        - 'M01: Authentication and Profile'
+      parameters:
+        - in: path
+          name: userid
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user whose other info needs to be edited.'
+      responses:
+        '200':
+          description: 'Ok. Successful retrieval of user profile for editing.'
+        '400':
+          description: 'The user id sent was not a numeric number'
+        '404':
+          description: 'The user was not found'
+  /profile/{userid}/update/other-info:
+    put:
+      operationId: R112
+      summary: 'R112: Update User Other Information'
+      description: 'Update the user profile with new personal details like name, address, phone, etc. Access: USR'
+      tags:
+        - 'M01: Authentication and Profile'
+      parameters:
+        - in: path
+          name: userid
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user whose profile needs to be updated.'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                firstname:
+                  type: string
+                  description: 'The first name of the user.'
+                lastname:
+                  type: string
+                  description: 'The last name of the user.'
+                address:
+                  type: string
+                  description: 'The address of the user.'
+                city:
+                  type: string
+                  description: 'The city of the user.'
+                country:
+                  type: string
+                  description: 'The country of the user.'
+                postalcode:
+                  type: string
+                  description: 'The postal code of the user.'
+                phone:
+                  type: string
+                  description: 'The phone number of the user.'
+                birthdate:
+                  type: string
+                  format: date
+                  description: 'The birthdate of the user.'
+              required:
+                - firstname
+                - lastname
+                - birthdate
+      responses:
+        '200':
+          description: 'Ok. User profile updated successfully.'
+  /profile/{userid}/update-picture:
+    put:
+      operationId: R113
+      summary: 'R113: Update Profile Picture'
+      description: 'Update the users profile picture. Access: USR'
+      tags:
+        - 'M01: Authentication and Profile'
+      parameters:
+        - in: path
+          name: userid
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user whose profile picture is being updated.'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                profile_picture:
+                  type: string
+                  format: binary
+                  description: 'The new profile picture to upload (image file).'
+              required:
+                - profile_picture
+      responses:
+        '200':
+          description: 'Ok. Profile picture updated successfully.'
+  /about:
+    get:
+      operationId: R501
+      summary: 'R501: View About Us Page'
+      description: 'Retrieve the About Us page content. This page provides team information, project details, and university information. Access: PUB'
+      tags:
+        - 'M05: Static Pages'
+      responses:
+        '200':
+          description: 'Ok. Successful retrieval of the About Us page content.'
+  /features:
+    get:
+      operationId: R502
+      summary: 'R502: View Features Page'
+      description: 'Retrieve the Features page content. This page outlines features available for visitors, sellers, bidders, and administrators. Access: PUB'
+      tags:
+        - 'M05: Static Pages'
+      responses:
+        '200':
+          description: 'Ok. Successful retrieval of the Features page content.'
+  /contacts:
+    get:
+      operationId: R503
+      summary: 'R503: View Contact Us Page'
+      description: 'Retrieve the Contact Us page content. This page provides contact information for inquiries. Access: PUB'
+      tags:
+        - 'M05: Static Pages'
+      responses:
+        '200':
+          description: 'Ok. Successful retrieval of the Contact Us page content.'
+  /admin:
+    get:
+      operationId: R401
+      summary: 'R401: Redirect to admin dashboard'
+      description: 'Redirects to the admin dashboard page. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      responses:
+        '200':
+          description: 'Ok. Redirect to admin dashboard'
+        '403':
+          description: 'Unauthorized action'
+  /admin/users:
+    get:
+      operationId: R402
+      summary: 'R402: View list of users'
+      description: 'Displays a paginated list of all users. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      responses:
+        '200':
+          description: 'Ok. Redirect to admin users page'
+        '403':
+          description: 'Unauthorized action'
+    post:
+      operationId: R414
+      summary: 'R414: Create user'
+      description: 'Creates a new user. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      responses:
+        '302':
+          description: 'Created the user successfully'
+          headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful user creation. Redirect to user list for admins.'
+                 value: '/admin/users'
+        '403':
+          description: 'Unauthorized action'
+        '422':
+          description: 'Age can not be below 18 years old.'
+  /admin/users/create:
+    get:
+      operationId: R403
+      summary: 'R403: Show create user form'
+      description: 'Displays the form to create a new user. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      responses:
+        '200':
+          description: 'Ok. Redirect to admin create user form'
+        '403':
+          description: 'Unauthorized action'
+  /admin/users/{user}/edit:
+    get:
+      operationId: R404
+      summary: 'R404: Show edit user form'
+      description: 'Displays the form to edit the details of an existing user. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      parameters:
+        - in: path
+          name: user
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user to be edited.'
+      responses:
+        '200':
+          description: 'Ok. Show user edit form'
+        '403':
+          description: 'Unauthorized action'
+  /admin/users/{user}:
+    put:
+      operationId: R405
+      summary: 'R405: Update user details'
+      description: 'Updates the details of an existing user. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      parameters:
+        - in: path
+          name: user
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user to be updated.'
+      responses:
+        '302':
+          description: 'User updated successfully'
+          headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful user update. Redirect to user list for admins.'
+                 value: '/admin/users'
+        '403':
+          description: 'Unauthorized action'
+        '422':
+          description: 'Age can not be below 18 years old.'
+    delete:
+      operationId: R406
+      summary: 'R406: Delete user'
+      description: 'Deletes a specific user from the system.'
+      tags:
+        - 'M04: Administration'
+      parameters:
+        - in: path
+          name: user
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user to be deleted.'
+      responses:
+        '200':
+          description: 'Ok. User deleted successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'User deleted successfully'
+        '422':
+          description: 'Can not delete himself'
+  /admin/users/search:
+    get:
+      operationId: R407
+      summary: 'R407: Search users'
+      description: 'Search for users based on provided query parameters. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      parameters:
+        - in: query
+          name: query
+          schema:
+            type: string
+          required: false
+          description: 'The search query for users.'
+      responses:
+        '200':
+          description: 'Ok. Return search results'
+        '403':
+          description: 'Unauthorized action'
+  /admin/items:
+    get:
+      operationId: R408
+      summary: 'R408: View list of items'
+      description: 'Displays a paginated list of all items. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      responses:
+        '200':
+          description: 'Ok. Return list of items'
+        '403':
+          description: 'Unauthorized action'
+  /admin/items/{item}/edit:
+    get:
+      operationId: R409
+      summary: 'R409: Show edit item form'
+      description: 'Displays the form to edit an existing item. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      parameters:
+        - in: path
+          name: item
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the item to be edited.'
+      responses:
+        '200':
+          description: 'Ok. Show item edit form'
+        '403':
+          description: 'Unauthorized action'
+        '422':
+          description: 'Can not edit items with bids'
+  /admin/items/{item}:
+    put:
+      operationId: R410
+      summary: 'R410: Update item details'
+      description: 'Updates the details of an existing item. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      parameters:
+        - in: path
+          name: item
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the item to be updated.'
+      responses:
+        '302':
+          description: 'Update item'
+          headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful item update. Redirect to item list for admins.'
+                 value: '/admin/items'
+        '403':
+          description: 'Unauthorized action'
+        '422':
+          description: 'Can not edit items with bids'
+    delete:
+      operationId: R411
+      summary: 'R411: Delete item'
+      description: 'Deletes a specific item from the system.'
+      tags:
+        - 'M04: Administration'
+      parameters:
+        - in: path
+          name: item
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the item to be deleted.'
+      responses:
+        '200':
+          description: 'Ok. Item deleted successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Item deleted successfully'
+        '422':
+          description: 'Can not delete items with bids'
+  /admin/items/pendent:
+    get:
+      operationId: R412
+      summary: 'R412: View pendent items'
+      description: 'Displays a paginated list of items with a pending state. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      responses:
+        '200':
+          description: 'Ok. Return pendent items list'
+        '403':
+          description: 'Unauthorized action'
+  /admin/items/accept/{itemId}:
+    get:
+      operationId: R413
+      summary: 'R413: Accept item for auction'
+      description: 'Marks a pending item as accepted for auction. Access: ADM'
+      tags:
+        - 'M04: Administration'
+      parameters:
+        - in: path
+          name: itemId
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the item to be accepted for auction.'
+      responses:
+        '200':
+          description: 'Ok. Item accepted for auction'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Item accepted successfully'
+        '403':
+          description: 'Unauthorized action'
+  /items/{id}/place-bid:
+    post:
+      operationId: R201
+      summary: 'R201: Place a bid on an item'
+      description: 'Allows a user to place a bid on an item. The bid must be higher than the current price. Access: BDR'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the item to place a bid on.'
+      responses:
+        '200':
+          description: 'Bid placed successfully.'
+        '422':
+          description: 'The bid must be higher than the current price'
+  /bids/{itemid}:
+    post:
+      operationId: R202
+      summary: 'R202: Store a bid for an item'
+      description: 'Stores a user bid for a specific item. It checks the user balance, updates the item status, and extends the deadline if needed. Access: BDR'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - in: path
+          name: itemid
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the item being bid on.'
+      responses:
+        '200':
+          description: 'Bid stored successfully.'
+        '422':
+          description: 'You can not be the top bidder or you do not have balance to place the bid'
+  /search:
+    get:
+      operationId: R203
+      summary: 'R203: Search for items'
+      description: 'Search for auction items based on various filters like name, style, technique, theme, width, and height. Access: USR'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - in: query
+          name: query
+          schema:
+            type: string
+            maxLength: 255
+          required: false
+          description: 'Search keyword to match item name or description.'
+        - in: query
+          name: style
+          schema:
+            type: string
+            maxLength: 255
+          required: false
+          description: 'Filter by item style.'
+        - in: query
+          name: technique
+          schema:
+            type: string
+            maxLength: 255
+          required: false
+          description: 'Filter by item technique.'
+        - in: query
+          name: theme
+          schema:
+            type: string
+            maxLength: 255
+          required: false
+          description: 'Filter by item theme.'
+        - in: query
+          name: max-width
+          schema:
+            type: integer
+            minimum: 1
+          required: false
+          description: 'Filter items with a maximum width.'
+        - in: query
+          name: max-height
+          schema:
+            type: integer
+            minimum: 1
+          required: false
+          description: 'Filter items with a maximum height.'
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+          required: false
+          description: 'The page number for paginated results.'
+      responses:
+        '200':
+          description: 'Search results returned successfully.'
+  /create-item:
+    get:
+      operationId: R204
+      summary: 'R204: Display item creation form'
+      description: 'Show the form to create a new item. Access: SLR'
+      tags:
+        - 'M02: Items'
+      responses:
+        '200':
+          description: 'Ok. Render item creation form.'
+    post:
+      operationId: R205
+      summary: 'R205: Create a new item'
+      description: 'Process the item creation request. Access: SLR'
+      tags:
+        - 'M02: Items'
+      responses:
+        '302':
+          description: 'Item created successfully.'
+          headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful item creation. Redirect to the item page.'
+                 value: '/items/{id}'
+        '422':
+          description: 'The deadline must be latter than the current date'
+  /user/{id}/items/{state}:
+    get:
+      operationId: R206
+      summary: 'R206: Get user items by state'
+      description: 'Retrieve items belonging to a user, filtered by their state. Access: PUB'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user whose items are being retrieved.'
+        - in: path
+          name: state
+          schema:
+            type: string
+          required: true
+          description: 'The state of the items to retrieve. Null for all states.'
+      responses:
+        '200':
+          description: 'Ok. Return user items filtered by state.'
+  /items/{id}:
+    get:
+      operationId: R207
+      summary: 'R207: View item details'
+      description: 'Retrieve details of a specific item by its ID. Access: PUB'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the item to retrieve.'
+      responses:
+        '200':
+          description: 'Ok. Return item details.'
+  /item/{id}:
+    delete:
+      operationId: R208
+      summary: 'R208: Delete an item'
+      description: 'Delete an item by its ID. Access: SLR'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the item to delete.'
+      responses:
+        '200':
+          description: 'Ok. Item deleted successfully.'
+    put:
+      operationId: R209
+      summary: 'R209: Update item details'
+      description: 'Update details of an existing item. Access: SLR'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the item to update.'
+      responses:
+        '302':
+          description: 'Item updated successfully.'
+          headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful item update. Redirect to the item page.'
+                 value: '/items/{id}'
+  /item/{id}/edit:
+    post:
+      operationId: R210
+      summary: 'R210: Display item edit form'
+      description: 'Show the form to edit an existing item. Access: SLR'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the item to edit.'
+      responses:
+        '200':
+          description: 'Ok. Render item edit form.'
+  /items/{id}/bid-history:
+    get:
+      operationId: R211
+      summary: 'R211: Display all the item bids'
+      description: 'Show all the bids from an item. Access: PUB'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the item with the bids.'
+      responses:
+        '200':
+          description: 'Ok. Render item bid history.'

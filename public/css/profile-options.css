@@ -1,0 +1,12 @@
+.options{
+    display: flex;
+    flex-direction: column;
+}
+
+.options a{
+    text-align: left;
+}
+
+.delete{
+    margin-left: -6px;
+}

@@ -1,0 +1,47 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.transactions-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.transaction-card {
+    margin: 1em;
+    padding: 1em;
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.transaction-text {
+    font-size: 1rem;
+}
+
+.positive-transaction-value {
+    font-weight: 700;
+    color: green;
+}
+
+.negative-transaction-value {
+    font-weight: 700;
+    color: red;
+}
+
+.transaction-time {
+    font-weight: 700;
+}
+
+.transaction-type {
+    font-weight: 600;
+    padding: 2px 5px;
+    border-radius: 5px;
+}

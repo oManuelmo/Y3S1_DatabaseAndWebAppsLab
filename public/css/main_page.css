@@ -1,0 +1,338 @@
+#items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    list-style: none; 
+}
+
+
+.item-container {
+    position: relative;
+    background-color: #ffffff;
+    overflow: hidden; 
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    flex: 1 1 calc(25% - 1.5rem);
+    min-width: calc(25% - 1.5rem);
+    padding: 1rem;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s, height 0.3s ease; 
+    height: 400px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.item-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.item-name {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #D4AF37;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+}
+
+.item-description {
+    color: #666;
+    margin-top: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.5;
+    max-height: calc(1.5em * 2); 
+    transition: max-height 0.3s ease;
+}
+
+
+.item-description {
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 960px) {
+    .carousel-item-content {
+        display: flex;
+        flex-direction: column; 
+        align-items: center ;
+        height: auto !important;
+    }
+
+
+    .carousel-item-left {
+        max-width: 100%;  
+        text-align: center;
+        margin: 0 !important;
+    }
+
+    .carousel-image {
+        width: 100%; 
+        height: auto; 
+        max-width: 300px; 
+    }
+
+    .carousel-item-right {
+        margin: 1em 0 0 0; 
+        width: 100%;
+        text-align: center; 
+    }
+
+    .carousel-item-name {
+        font-size: 1.8rem; 
+    }
+
+    .carousel-item-description {
+        display: none;
+    }
+
+
+
+
+}
+
+
+
+@media (max-width: 1024px) {
+    .item-container {
+        flex: 1 1 calc(33.333% - 1.5rem);
+    }
+}
+
+@media (width: 768px) {
+    .item-container {
+        flex: 1 1 calc(50% - 1.5rem);
+        max-width: calc(50% - 1.5rem);
+    }
+}
+
+@media (max-width: 560px) {
+    .item-container {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+    #items {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .item-container {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+    #items {
+        padding: 1rem;
+    }
+}   
+
+.existing-image {
+    width: 175px;
+    height: 175px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    padding: 5px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.existing-image img {
+    max-height: 130px;
+    max-width: 130px;
+    width: auto;
+    height: auto;
+    box-shadow: 
+    0 0 0 3px #5b4916,  
+    0 0 0 4px #000000,  
+    0 0 0 7px #5b4916;
+}
+
+#upcoming-carousel{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    margin: 0 auto; 
+    max-width: 1200px; 
+}
+
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    margin: 0 auto;
+    margin-bottom: 2em;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding-top: 10px;
+    z-index: 1;
+}
+
+
+.carousel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(158deg, #ffffff 30%, 
+    #ffffff 60%, 
+    #feeebb 75%, 
+    #feeebb 80%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    z-index: -1; 
+    border-radius: 8px; 
+}
+
+.carousel-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    display: flex;
+    min-width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.carousel-item-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+.carousel-item-left {
+    flex: 0 0 auto;
+    height: 95%;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    margin-bottom: 1.5em;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    background-color: #fff !important;
+    border-radius: 8px;
+    margin-left: 2em;
+    
+}
+.carousel-item-right {
+    flex: 1 1 auto; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 2em;
+}
+
+.carousel-image {
+    width: 300px;
+    height: auto;
+    object-fit: cover;
+    border: 1px solid gray;
+    margin: 15px;
+    box-shadow: 
+    0 0 0 3px #5b4916,  
+    0 0 0 4px #000000,  
+    0 0 0 7px #5b4916; 
+}
+.carousel-item-name {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.carousel-item-description {
+    color: #666;
+    margin-top: 10px;
+    white-space: normal;       
+    word-wrap: break-word;      
+    word-break: break-word;     
+    overflow-wrap: break-word;  
+    max-width: 100%;            
+    line-height: 1.5; 
+    font-size: 20px;   
+}
+
+.carousel-item-price{
+    color: #d7ae29;
+    font-weight: bold;
+}
+
+.countdown {
+    font-size: 20px;
+    color: #D4AF37;
+    font-weight: bold;
+}
+
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.carousel-control:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-control:focus,
+.carousel-control:active {
+    background-color: rgba(0, 0, 0, 0.8); 
+    color: #666;
+}
+
+.carousel-control span {
+    font-size: 20px;
+}
+
+
+.prev-control, .next-control {
+    border: none;
+    cursor: pointer;
+    background-color: transparent !important;
+}
+
+.prev-control{
+    margin-left: 5px;
+}
+
+
+.prev-control:hover, .next-control:hover{
+    color: #D4AF37;
+}
+
+.check-auction-link {
+    margin-top: 0;
+    margin-bottom: 2em;
+    font-size: 20px !important;
+    border-radius: 5px;
+    text-decoration: none; 
+    transition: background-color 0.3s ease;
+}
+
+.check-auction-link:hover {
+    color: #5b4916 !important;
+}
+
+.carousel-item-price{
+    font-size: 25px;
+}

@@ -1,0 +1,228 @@
+
+
+.item-details .item {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.item-details .item-title {
+    font-size: 4rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.item-details {
+    font-size: 2rem;
+    line-height: 1.6;
+    color: #2c3e50;
+}
+
+#current-price, .countdown{
+    color: #D4AF37;
+    font-size: 30px;
+    margin: 0 !important;
+}
+
+.item-carousel button{
+    font-size: 20px !important;
+
+}
+
+
+.item-details .images .image-container {
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.item-details .images .image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.item-details .images .image-container:hover img {
+    transform: scale(1.05);
+}
+
+.item-details .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.item-details .col-md-4 {
+    flex: 1 1 30%;
+}
+
+
+
+.item-flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.item-details-text {
+    flex: 1.5;
+}
+
+.carousel-container {
+    position: relative;
+    width: 400px;
+    height: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2em;
+}
+
+.carousel-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    justify-content: center;
+    margin-top: 2em;
+    margin-bottom: 4m;
+}
+
+.carousel-items {
+    display: flex;
+    width: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    flex: 0 0 100%;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.carousel-item img {
+    max-width: 300px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    box-shadow: 
+    0 0 0 3px #5b4916,  
+    0 0 0 4px #000000,  
+    0 0 0 7px #5b4916;
+}
+
+.carousel-button span.material-symbols-rounded {
+    font-size: 30px;
+}
+
+.prev-button, .next-button {
+    position: absolute;
+    top: 45%;
+    transform: translateY(20%);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    background-color: transparent !important;
+}
+
+.prev-button {
+    left: 10px;
+}
+
+.next-button {
+    right: 1px;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+label{
+    padding-left:6px !important;
+}
+
+input{
+    width:50% !important;
+    margin: 0 !important;
+    margin-top: 1em !important;
+}
+
+@media (max-width: 1280px) {
+    .item-flex {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container{
+        max-width: 90% !important;
+        padding: 0 !important;
+    }
+    .carousel-container {
+        width: 90%;
+        height: 90%;
+
+    }
+    .carousel-item img {
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+}
+
+.item-seller{
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+    line-height: 1.6;
+}
+
+.seller-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.seller-pfp{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; 
+    transition: opacity 0.3s ease;
+    border: 2px solid #e1c155;
+}
+
+a:hover .seller-pfp {
+    opacity: 0.7; 
+}
+
+a:hover .seller-name {
+    color: #919191; 
+}
+
+.seller-name {
+    color: #333;
+    transition: color 0.3s ease; 
+    margin-left: 5px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.bid-amount:hover{
+    color: #2c3e50 !important;
+    transform: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
